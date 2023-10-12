@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow APP NAME to access your camera."
+        }
+      ]
+    ],
     "name": "AppDevelopment",
     "slug": "AppDevelopment",
     "version": "1.0.0",
