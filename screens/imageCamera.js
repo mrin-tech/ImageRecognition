@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Dimensions, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import DisplayImg from './displayImg';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 
 export default function CameraScreen() {
   const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [imgURI, setimgURI] = useState(null)
+  const [imgURI, setImgURI] = useState(null);
   const cameraRef = useRef(null);
 
   useEffect(() => {
@@ -20,21 +20,20 @@ export default function CameraScreen() {
 
   const takePicture = async () => {
     if (cameraRef.current) {
-      const { uri } = await cameraRef.current.takePictureAsync()
-      setimgURI(uri)
-      console.log("----------")
-      console.log("imgaeXamera",imgURI)
+      const { uri } = await cameraRef.current.takePictureAsync();
+      setImgURI(uri);
+      console.log("----------");
+      console.log("imageCamera", imgURI);
+      navigation.navigate("DisplayImg", { imgUri: uri }); // Navigate after setting imgURI
     }
-    
   }
-
 
   if (hasCameraPermission === null) {
     return <View />;
   }
 
   if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No access to the camera</Text>;
   }
 
   return (
@@ -46,21 +45,17 @@ export default function CameraScreen() {
         ratio="16:9" // Set your preferred aspect ratio
       >
         <View style={styles.buttonContainer}>
-        <Button
-                title="Take Picture"
-                onPress={() => {takePicture(); navigation.navigate("DisplayImg", {imgUri: imgURI})}}
-            />
-          {/* <TouchableOpacity style={styles.button} onPress={takePicture}>
-            <Text style={styles.buttonText}>Take Picture</Text>
-          </TouchableOpacity> */}
+          <Button
+            title="Take Picture"
+            onPress={takePicture} // Call takePicture when the button is pressed
+          />
         </View>
       </Camera>
-      {/* <DisplayImg imgUri={imgURI}></DisplayImg> */}
     </View>
   );
 }
 
-const {width} = Dimensions.get('window')
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -86,4 +81,3 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-

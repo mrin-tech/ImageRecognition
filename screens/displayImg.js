@@ -1,44 +1,29 @@
-// import React, { useState, useEffect, useRef } from 'react';
-// import { Text, View, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
-
-// export default function DisplayImg({imgUri}) {
-//     // console.log("CHECK")
-//     return (
-//         <View>
-//         {imgUri ? 
-//         (<View>
-//             <Image source={{imgUri}} ></Image>
-//         </View>)
-//         :
-//         (<Text>No image to display.</Text>)
-//         }
-//         </View>
-//     )
-// }
-
-// const styles = StyleSheet.create({
-//     imageDim: {
-//         width:
-//     }
-// })
-
 import React from 'react';
-import { Text, Image, View, StyleSheet } from 'react-native';
-import { useRoute } from '@react-navigation/native'; // Import useRoute from React Navigation
+import { View, Image, StyleSheet } from 'react-native';
 
-export default function DisplayImg() {
-  const route = useRoute(); // Use useRoute to access the route and its parameters
-  const imgUri = route.params.imgUri; // Access the imgUri parameter
-  console.log(imgUri)
+export default function DisplayImg({ route }) {
+  const { imgUri } = route.params;
+
   return (
-    <View >
-      {imgUri ? (
-        <Image source={{ uri: imgUri }}/>
-      ) : (
-        <Text>No image to display</Text>
-      )}
+    <View style={styles.container}>
+      <Image
+        source={{ uri: imgUri }}
+        style={styles.image}
+      />
     </View>
   );
 }
 
-// ... (styles and other code)
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  image: {
+    width: 300, // Adjust the width as needed
+    height: 300, // Adjust the height as needed
+    resizeMode: 'contain', // You can change the resizeMode based on your preference
+  },
+});
